@@ -17,6 +17,7 @@
     "CACHE_TYPE": "memory",
     "STREMIO_ADDON": "true",
     "CORS_ORIGIN": "*",
-    "MCP_ENABLED": "true"
+    "MCP_ENABLED": "true",
+    "TMDB_API_KEY": "325b947646483966de1c17a8f1320f45"
   }
 }
