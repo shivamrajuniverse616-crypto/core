@@ -22,5 +22,7 @@ services:
             value: 'true'
           - key: TMDB_API_KEY
             value: '325b947646483966de1c17a8f1320f45'
+          - key: HOST
+            value: '0.0.0.0'
           - key: REDIS_PASSWORD
             sync: false
