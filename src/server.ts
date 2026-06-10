@@ -34,7 +34,7 @@ async function main() {
 
         // TMDB
         tmdb: {
-            apiKey: process.env.TMDB_API_KEY!,
+            apiKey: process.env.TMDB_API_KEY || '325b947646483966de1c17a8f1320f45',
             cacheTTL: 24 * 60 * 60 // 24h
         },
 
