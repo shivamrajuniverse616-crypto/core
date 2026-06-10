@@ -14,9 +14,9 @@ async function main() {
         version: '1.0.0',
 
         // Network
-        host: process.env.HOST ?? 'localhost',
+        host: process.env.HOST ?? '0.0.0.0',
         port: Number(process.env.PORT ?? 3000),
-        publicUrl: process.env.PUBLIC_URL,
+        publicUrl: process.env.PUBLIC_URL || 'https://core-4z5l.onrender.com',
 
         // Cache (memory for dev, Redis for prod)
         cache: {
