@@ -21,6 +21,6 @@ services:
           - key: MCP_ENABLED
             value: 'true'
           - key: TMDB_API_KEY
-            sync: false
+            value: '325b947646483966de1c17a8f1320f45'
           - key: REDIS_PASSWORD
             sync: false
