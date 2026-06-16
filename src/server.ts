@@ -47,7 +47,7 @@ async function main() {
         cors: {
             origin: process.env.CORS_ORIGIN ?? '*',
             methods: ['GET', 'OPTIONS'],
-            allowedHeaders: ['Content-Type', 'Authorization'],
+            allowedHeaders: ['Content-Type', 'Authorization', 'Range'],
             exposedHeaders: ['Content-Range', 'Accept-Ranges', 'ETag'],
             preflightContinue: false,
             optionsSuccessStatus: 204
@@ -72,6 +72,14 @@ async function main() {
         // MCP for AI agents
         mcp: {
             enabled: process.env.MCP_ENABLED === 'true'
+        }
+    });
+
+    // Fix OMSS framework proxy duplicate range header bug
+    server.app.addHook('preHandler', async (request, reply) => {
+        if (request.url.startsWith('/v1/proxy') && request.headers.range) {
+            request.headers['Range'] = request.headers.range;
+            delete request.headers.range;
         }
     });
 
