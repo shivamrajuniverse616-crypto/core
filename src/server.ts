@@ -76,7 +76,8 @@ async function main() {
     });
 
     // Fix OMSS framework proxy duplicate range header bug
-    server.app.addHook('preHandler', async (request, reply) => {
+    // @ts-ignore - app is private
+    (server as any).app.addHook('preHandler', async (request: any, reply: any) => {
         if (request.url.startsWith('/v1/proxy') && request.headers.range) {
             request.headers['Range'] = request.headers.range;
             delete request.headers.range;
