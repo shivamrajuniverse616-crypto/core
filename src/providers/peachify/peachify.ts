@@ -146,6 +146,26 @@ export class PeachifyProvider extends BaseProvider {
             .map((s) => this.parseSubtitle(s, serverName))
             .filter((s): s is PeachifyParsedSubtitle => s !== null);
 
+        // Unwrap worker proxy URLs that return 403 Forbidden
+        for (const s of parsed) {
+            try {
+                if (s.url.includes('.workers.dev/') || s.url.includes('eat-peach.sbs/')) {
+                    const parsedUrl = new URL(s.url);
+                    const innerUrl = parsedUrl.searchParams.get('url');
+                    if (innerUrl) {
+                        s.url = decodeURIComponent(innerUrl);
+                    }
+                    const innerHeadersStr = parsedUrl.searchParams.get('headers');
+                    if (innerHeadersStr) {
+                        try {
+                            const innerHeaders = JSON.parse(decodeURIComponent(innerHeadersStr));
+                            s.headers = { ...s.headers, ...innerHeaders };
+                        } catch(e) {}
+                    }
+                }
+            } catch(e) {}
+        }
+
         const sources: ProviderResult['sources'] = parsed.map((s) => ({
             url: this.createProxyUrl(s.url, s.headers ?? this.HEADERS),
             type: s.type,
