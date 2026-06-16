@@ -120,7 +120,10 @@ export class PeachifyProvider extends BaseProvider {
 
         const response = await fetch(apiUrl, { headers: this.HEADERS });
 
-        if (!response.ok) return null;
+        if (!response.ok) {
+            console.warn(`[Peachify] Fetch failed for movie: ${response.status} ${response.statusText}`);
+            return null;
+        }
 
         let body = (await response.json()) as PeachifyApiResponse;
 
