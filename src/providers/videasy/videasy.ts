@@ -137,7 +137,7 @@ export class VideasyProvider extends BaseProvider {
     ): Promise<ProviderResult | null> {
         const params = this.buildParams(server, media);
         const url = `${server.url}?${new URLSearchParams(params as Record<string, string>)}`;
-        const response = await fetch(url, { headers: this.HEADERS });
+        const response = await fetch(url, { headers: this.HEADERS, signal: AbortSignal.timeout(8000) });
 
         if (!response.ok) {
             return this.emptyResult('invalid response', media);
@@ -161,7 +161,7 @@ export class VideasyProvider extends BaseProvider {
             .map((s) => ({
                 url: this.createProxyUrl(s.url, this.HEADERS),
                 type: this.detectType(s.url, s.type),
-                quality: this.normalizeQuality(s.quality),
+                quality: `[Videasy] ${this.resolveLanguageLabel(server)} ${this.normalizeQuality(s.quality)}`,
                 audioTracks: [
                     {
                         language: this.resolveLanguage(server),
@@ -270,7 +270,8 @@ export class VideasyProvider extends BaseProvider {
         try {
             const res = await fetch(this.BASE_URL, {
                 method: 'HEAD',
-                headers: this.HEADERS
+                headers: this.HEADERS,
+                signal: AbortSignal.timeout(8000)
             });
             return res.status < 500;
         } catch {

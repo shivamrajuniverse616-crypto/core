@@ -290,7 +290,7 @@ export class VidNestProvider extends BaseProvider {
     }
 
     private async fetchVidnest(url: string) {
-        const res = await fetch(url, { headers: this.HEADERS });
+        const res = await fetch(url, { headers: this.HEADERS, signal: AbortSignal.timeout(8000) });
 
         if (!res.ok) {
             throw new Error(`VidNest: ${res.status}`);

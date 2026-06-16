@@ -149,7 +149,7 @@ export class PeachifyProvider extends BaseProvider {
         const sources: ProviderResult['sources'] = parsed.map((s) => ({
             url: this.createProxyUrl(s.url, s.headers ?? this.HEADERS),
             type: s.type,
-            quality: s.quality?.toString() ?? 'Auto',
+            quality: `[Peachify] ${s.dub && s.dub.toLowerCase() !== 'unknown' ? s.dub + ' ' : ''}${s.quality?.toString() ?? 'Auto'}`,
             audioTracks: [
                 {
                     label: s.dub,

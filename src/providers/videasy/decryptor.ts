@@ -41,7 +41,8 @@ export async function decryptResponse(
         const res = await fetch(DEC_API, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: blob, id: tmdbId })
+            body: JSON.stringify({ text: blob, id: tmdbId }),
+            signal: AbortSignal.timeout(8000)
         });
 
         if (!res.ok) return null;

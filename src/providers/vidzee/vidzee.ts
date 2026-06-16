@@ -183,7 +183,8 @@ export class VidZeeProvider extends BaseProvider {
             }
 
             const response = await fetch(url, {
-                headers: this.HEADERS
+                headers: this.HEADERS,
+                signal: AbortSignal.timeout(8000)
             });
 
             if (!response.ok) {
@@ -199,7 +200,8 @@ export class VidZeeProvider extends BaseProvider {
     private async fetchDecryptionKey(): Promise<string | null> {
         try {
             const response = await fetch(`${this.BASE_URL}/api-key`, {
-                headers: this.HEADERS
+                headers: this.HEADERS,
+                signal: AbortSignal.timeout(8000)
             });
 
             if (response.status === 200) {
@@ -243,7 +245,8 @@ export class VidZeeProvider extends BaseProvider {
         try {
             const response = await fetch(this.BASE_URL, {
                 method: 'HEAD',
-                headers: this.HEADERS
+                headers: this.HEADERS,
+                signal: AbortSignal.timeout(8000)
             });
             return response.status === 200;
         } catch {
